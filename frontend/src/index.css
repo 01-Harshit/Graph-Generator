@@ -1,0 +1,317 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   LIGHT MODE — Clean, soft, professional
+   Inspired by: Notarity
+   ============================================ */
+:root {
+  /* Backgrounds */
+  --bg-primary: #EEF2FF;          /* A — blue-lavender base */
+  --bg-secondary: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-accent: #FAF7F2;           /* B — warm cream accent */
+  
+  /* Text */
+  --text-primary: #1A0B2E;
+  --text-secondary: #6B5B95;
+  --text-muted: #9B8DB8;
+  
+  /* Accents */
+  --accent-primary: #582C83;
+  --accent-hover: #7C3AED;
+  --accent-secondary: #2DD4BF;
+  --accent-light: #F3EFFF;
+  
+  /* Borders & Lines */
+  --border: #E8E3F5;
+  --border-strong: #D4CCE8;
+  
+  /* Graph Animation - Day Mode (Solid, no glow) */
+  --graph-bar-1: #582C83;
+  --graph-bar-2: #7C3AED;
+  --graph-bar-3: #8C52FF;
+  --graph-bar-4: #2DD4BF;
+  --graph-line: #2DD4BF;
+  --graph-glow: transparent;
+  --graph-shadow: rgba(88, 44, 131, 0.15); 
+  --graph-bg: #F3EFFF;
+  
+  /* Effects */
+  --shadow-sm: 0 1px 3px rgba(88, 44, 131, 0.08);
+  --shadow-md: 0 4px 12px rgba(88, 44, 131, 0.12);
+  --shadow-lg: 0 10px 30px rgba(88, 44, 131, 0.15);
+}
+
+/* ============================================
+   DARK MODE — Deep space, glowing, vibrant
+   Inspired by: Launchpad
+   ============================================ */
+.dark {
+  /* Backgrounds */
+  --bg-primary: #0F0620;
+  --bg-secondary: #1A0B2E;
+  --bg-card: #1A0B2E;
+  
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A78BFA;
+  --text-muted: #6B5B95;
+  
+  /* Accents */
+  --accent-primary: #7C3AED;
+  --accent-hover: #8C52FF;
+  --accent-secondary: #2DD4BF;
+  --accent-light: #2D1B4E;
+  
+  /* Borders & Lines */
+  --border: #2D1B4E;
+  --border-strong: #3D2B5E;
+  
+  /* Graph Animation - Night Mode (Glowing, vibrant) */
+  --graph-bar-1: #7C3AED;
+  --graph-bar-2: #8C52FF;
+  --graph-bar-3: #EC4899;
+  --graph-bar-4: #2DD4BF;
+  --graph-line: #2DD4BF;
+  --graph-glow: #7C3AED;
+  --graph-shadow: rgba(124, 58, 237, 0.4);  
+  --graph-bg: #1A0B2E;
+  
+  /* Effects - Glowing shadows */
+  --shadow-sm: 0 1px 3px rgba(124, 58, 237, 0.3);
+  --shadow-md: 0 4px 12px rgba(124, 58, 237, 0.4);
+  --shadow-lg: 0 10px 30px rgba(124, 58, 237, 0.5);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+* {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ============================================
+   GRAPH ANIMATIONS — Slower & Fixed
+   ============================================ */
+
+/* Bar rising animation — SLOWER */
+@keyframes bar-rise {
+  from {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  to {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+}
+
+/* Line drawing animation — SLOWER */
+@keyframes line-draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Floating particles */
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-80px);
+    opacity: 0;
+  }
+}
+
+/* Glow — Subtle for bars (dark mode only) */
+@keyframes pulse-glow-bar {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px var(--graph-glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 5px var(--graph-glow));
+  }
+}
+
+/* Glow — Subtle for line (dark mode only) */
+@keyframes pulse-glow-line {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px var(--graph-glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 6px var(--graph-glow));
+  }
+}
+
+/* Dot appear animation */
+@keyframes dot-appear {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   HERO GRAPH STYLES
+   ============================================ */
+
+.hero-graph {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* Bars — slower animation with spaced delays */
+.hero-bar {
+  transform-origin: bottom;
+  transform: scaleY(0);
+  animation: bar-rise 1.2s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+
+.hero-bar-1 { animation-delay: 0.6s; }
+.hero-bar-2 { animation-delay: 0.9s; }
+.hero-bar-3 { animation-delay: 1.2s; }
+.hero-bar-4 { animation-delay: 1.5s; }
+.hero-bar-5 { animation-delay: 1.8s; }
+.hero-bar-6 { animation-delay: 2.1s; }
+
+/* Line — slower draw, delayed to start after bars */
+.hero-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: line-draw 2.5s ease-out 5.0s forwards;
+}
+
+/* ============================================
+   LIGHT MODE — Soft depth (no glow, just shadow)
+   ============================================ */
+
+/* Bars — light mode mein soft shadow */
+:root .hero-bar {
+  filter: drop-shadow(0 4px 6px var(--graph-shadow));
+}
+
+/* Line — light mode mein bhi subtle glow (very soft) */
+:root .hero-line {
+  filter: drop-shadow(0 1px 2px rgba(45, 212, 191, 0.3));
+}
+
+/* Dots — light mode mein shadow */
+:root .hero-dot {
+  filter: drop-shadow(0 1px 2px rgba(45, 212, 191, 0.5));
+}
+
+/* Particles — light mode mein bhi visible */
+:root .particle {
+  opacity: 0.5;
+}
+
+/* Dots — appear after line completes */
+.hero-dot {
+  opacity: 0;
+  transform-origin: center;
+  animation: dot-appear 0.4s ease-out forwards;
+}
+
+.hero-dot-1 { animation-delay: 3.5s; }
+.hero-dot-2 { animation-delay: 3.7s; }
+.hero-dot-3 { animation-delay: 3.9s; }
+.hero-dot-4 { animation-delay: 4.1s; }
+.hero-dot-5 { animation-delay: 4.3s; }
+.hero-dot-6 { animation-delay: 4.5s; }
+
+/* Floating particles */
+.particle {
+  animation: float-up 5s ease-in-out infinite;
+}
+
+.particle-1 { animation-delay: 0s; }
+.particle-2 { animation-delay: 1.2s; }
+.particle-3 { animation-delay: 2.4s; }
+.particle-4 { animation-delay: 3.6s; }
+.particle-5 { animation-delay: 1.8s; }
+.particle-6 { animation-delay: 3.0s; }
+
+/* ============================================
+   DARK MODE GLOW — Subtle & Separate
+   Line has NO transform — bug fixed!
+   ============================================ */
+
+/* Bars — glow only (no scaleY override) */
+.dark .hero-bar {
+  animation: bar-rise 1.2s cubic-bezier(0.34, 1.4, 0.64, 1) forwards,
+             pulse-glow-bar 4s ease-in-out infinite 3s;
+}
+
+.dark .hero-bar-1 { animation-delay: 0.6s, 3s; }
+.dark .hero-bar-2 { animation-delay: 0.9s, 3.2s; }
+.dark .hero-bar-3 { animation-delay: 1.2s, 3.4s; }
+.dark .hero-bar-4 { animation-delay: 1.5s, 3.6s; }
+.dark .hero-bar-5 { animation-delay: 1.8s, 3.8s; }
+.dark .hero-bar-6 { animation-delay: 2.1s, 4.0s; }
+
+/* Line — glow only (NO transform, NO scaleY) */
+.dark .hero-line {
+  animation: line-draw 2.5s ease-out 5.0s forwards,
+             pulse-glow-line 4s ease-in-out infinite 7.5s;
+}
+
+/* Dots in dark mode */
+.dark .hero-dot {
+  filter: drop-shadow(0 0 4px var(--graph-glow));
+}
+
+/* ============================================================
+   POPUP TABLE ANIMATION — Slides in from right with scale
+   ============================================================ */
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Mobile: slide from bottom instead of right */
+@media (max-width: 1023px) {
+  @keyframes popupSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
