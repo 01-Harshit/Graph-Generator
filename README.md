@@ -284,7 +284,6 @@ Latest run: **55/55** on both SV and CTA. Earlier runs scored lower (94.5% VCS) 
 ## 🔮 Roadmap
 
 - [ ] Deploy backend and frontend publicly
-- [ ] Dockerfile and `docker-compose`
 - [ ] GitHub Actions CI (lint and eval)
 - [ ] Redis-based rate limiter for multi-worker setups
 - [ ] Unit tests with `pytest`
